@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="./autocomplete.css">
+<style>
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: Arial;
+	color: #333;
+}
+
+label {
+	display: inline-block;
+	vertical-align: top;
+}
+
+label > span {
+	display: block;
+	padding: .25rem 10px;
+	color: gray;
+	height: 1em;
+}
+
+input {
+	border: 1px solid transparent;
+	background-color: #f1f1f1;
+	padding: 10px;
+	font-size: 16px;
+}
+
+input[type=text] {
+	background-color: #f1f1f1;
+	width: 100%;
+}
+</style>
+</head>     
+<body>
+
+<h2>Autocomplete Demo</h2>
+
+<form autocomplete="off">
+
+	<label>
+		with value + label
+		<input id="input1" type="text" placeholder="Eingabe" list="datalist1" data-autocomplete-label="label1">
+		<span id="label1"></span>
+	</label>
+
+	<label>
+		with label
+		<input id="input2" type="text" placeholder="Eingabe" list="datalist2" data-autocomplete-label="label2">
+		<span id="label2"></span>
+	</label>
+
+	<label>
+		with value
+		<input id="input3" type="text" placeholder="Eingabe" list="datalist3" data-autocomplete-label="label3">
+		<span id="label3"></span>
+	</label>
+	
+<div>
+<xmp>
+with value + label
+<option value="0001" label="Afghanistan">
+<option value="0001">Afghanistan</option>
+...
+<option value="0222" label="Zimbabwe">
+<option value="0222" label="Zimbabwe">
+
+with label
+<option label="Afghanistan">
+<option>Afghanistan</option>
+...
+<option label="Zimbabwe">
+<option>Zimbabwe</option>
+
+with value
+<option value="0001">
+...
+<option value="0222">
+</xmp>
+</div>
+
+	<datalist id="datalist1">
+		<option value="0001" label="Afghanistan">
+		<option value="0002" label="Albania">
+		<option value="0003" label="Algeria">
+		<option value="0004" label="Andorra">
+		<option value="0005" label="Angola">
+		<option value="0006" label="Anguilla">
+		<option value="0007" label="Antigua & Barbuda">
+		<option value="0008" label="Argentina">
+		<option value="0009" label="Armenia">
+		<option value="0010" label="Aruba">
+		<option value="0011" label="Australia">
+		<option value="0012" label="Austria">
+		<option value="0013" label="Azerbaijan">
+		<option value="0014" label="Bahamas">
+		<option value="0015" label="Bahrain">
+		<option value="0016" label="Bangladesh">
+		<option value="0017" label="Barbados">
+		<option value="0018" label="Belarus">
+		<option value="0019" label="Belgium">
+		<option value="0020" label="Belize">
+		<option value="0021" label="Benin">
+		<option value="0022" label="Bermuda">
+		<option value="0023" label="Bhutan">
+		<option value="0024" label="Bolivia">
+		<option value="0025" label="Bosnia & Herzegovina">
+		<option value="0026" label="Botswana">
+		<option value="0027" label="Brazil">
+		<option value="0028" label="British Virgin Islands">
+		<option value="0029" label="Brunei">
+		<option value="0030" label="Bulgaria">
+		<option value="0031" label="Burkina Faso">
+		<option value="0032" label="Burundi">
+		<option value="0033" label="Cambodia">
+		<option value="0034" label="Cameroon">
+		<option value="0035" label="Canada">
+		<option value="0036" label="Cape Verde">
+		<option value="0037" label="Cayman Islands">
+		<option value="0038" label="Central Arfrican Republic">
+		<option value="0039" label="Chad">
+		<option value="0040" label="Chile">
+		<option value="0041" label="China">
+		<option value="0042" label="Colombia">
+		<option value="0043" label="Congo">
+		<option value="0044" label="Cook Islands">
+		<option value="0045" label="Costa Rica">
+		<option value="0046" label="Cote D Ivoire">
+		<option value="0047" label="Croatia">
+		<option value="0048" label="Cuba">
+		<option value="0049" label="Curacao">
+		<option value="0050" label="Cyprus">
+		<option value="0051" label="Czech Republic">
+		<option value="0052" label="Denmark">
+		<option value="0053" label="Djibouti">
+		<option value="0054" label="Dominica">
+		<option value="0055" label="Dominican Republic">
+		<option value="0056" label="Ecuador">
+		<option value="0057" label="Egypt">
+		<option value="0058" label="El Salvador">
+		<option value="0059" label="Equatorial Guinea">
+		<option value="0060" label="Eritrea">
+		<option value="0061" label="Estonia">
+		<option value="0062" label="Ethiopia">
+		<option value="0063" label="Falkland Islands">
+		<option value="0064" label="Faroe Islands">
+		<option value="0065" label="Fiji">
+		<option value="0066" label="Finland">
+		<option value="0067" label="France">
+		<option value="0068" label="French Polynesia">
+		<option value="0069" label="French West Indies">
+		<option value="0070" label="Gabon">
+		<option value="0071" label="Gambia">
+		<option value="0072" label="Georgia">
+		<option value="0073" label="Germany">
+		<option value="0074" label="Ghana">
+		<option value="0075" label="Gibraltar">
+		<option value="0076" label="Greece">
+		<option value="0077" label="Greenland">
+		<option value="0078" label="Grenada">
+		<option value="0079" label="Guam">
+		<option value="0080" label="Guatemala">
+		<option value="0081" label="Guernsey">
+		<option value="0082" label="Guinea">
+		<option value="0083" label="Guinea Bissau">
+		<option value="0084" label="Guyana">
+		<option value="0085" label="Haiti">
+		<option value="0086" label="Honduras">
+		<option value="0087" label="Hong Kong">
+		<option value="0088" label="Hungary">
+		<option value="0089" label="Iceland">
+		<option value="0090" label="India">
+		<option value="0091" label="Indonesia">
+		<option value="0092" label="Iran">
+		<option value="0093" label="Iraq">
+		<option value="0094" label="Ireland">
+		<option value="0095" label="Isle of Man">
+		<option value="0096" label="Israel">
+		<option value="0097" label="Italy">
+		<option value="0098" label="Jamaica">
+		<option value="0099" label="Japan">
+		<option value="0100" label="Jersey">
+		<option value="0101" label="Jordan">
+		<option value="0102" label="Kazakhstan">
+		<option value="0103" label="Kenya">
+		<option value="0104" label="Kiribati">
+		<option value="0105" label="Kosovo">
+		<option value="0106" label="Kuwait">
+		<option value="0107" label="Kyrgyzstan">
+		<option value="0108" label="Laos">
+		<option value="0109" label="Latvia">
+		<option value="0110" label="Lebanon">
+		<option value="0111" label="Lesotho">
+		<option value="0112" label="Liberia">
+		<option value="0113" label="Libya">
+		<option value="0114" label="Liechtenstein">
+		<option value="0115" label="Lithuania">
+		<option value="0116" label="Luxembourg">
+		<option value="0117" label="Macau">
+		<option value="0118" label="Macedonia">
+		<option value="0119" label="Madagascar">
+		<option value="0120" label="Malawi">
+		<option value="0121" label="Malaysia">
+		<option value="0122" label="Maldives">
+		<option value="0123" label="Mali">
+		<option value="0124" label="Malta">
+		<option value="0125" label="Marshall Islands">
+		<option value="0126" label="Mauritania">
+		<option value="0127" label="Mauritius">
+		<option value="0128" label="Mexico">
+		<option value="0129" label="Micronesia">
+		<option value="0130" label="Moldova">
+		<option value="0131" label="Monaco">
+		<option value="0132" label="Mongolia">
+		<option value="0133" label="Montenegro">
+		<option value="0134" label="Montserrat">
+		<option value="0135" label="Morocco">
+		<option value="0136" label="Mozambique">
+		<option value="0137" label="Myanmar">
+		<option value="0138" label="Namibia">
+		<option value="0139" label="Nauro">
+		<option value="0140" label="Nepal">
+		<option value="0141" label="Netherlands">
+		<option value="0142" label="Netherlands Antilles">
+		<option value="0143" label="New Caledonia">
+		<option value="0144" label="New Zealand">
+		<option value="0145" label="Nicaragua">
+		<option value="0146" label="Niger">
+		<option value="0147" label="Nigeria">
+		<option value="0148" label="North Korea">
+		<option value="0149" label="Norway">
+		<option value="0150" label="Oman">
+		<option value="0151" label="Pakistan">
+		<option value="0152" label="Palau">
+		<option value="0153" label="Palestine">
+		<option value="0154" label="Panama">
+		<option value="0155" label="Papua New Guinea">
+		<option value="0156" label="Paraguay">
+		<option value="0157" label="Peru">
+		<option value="0158" label="Philippines">
+		<option value="0159" label="Poland">
+		<option value="0160" label="Portugal">
+		<option value="0161" label="Puerto Rico">
+		<option value="0162" label="Qatar">
+		<option value="0163" label="Reunion">
+		<option value="0164" label="Romania">
+		<option value="0165" label="Russia">
+		<option value="0166" label="Rwanda">
+		<option value="0167" label="Saint Pierre & Miquelon">
+		<option value="0168" label="Samoa">
+		<option value="0169" label="San Marino">
+		<option value="0170" label="Sao Tome and Principe">
+		<option value="0171" label="Saudi Arabia">
+		<option value="0172" label="Senegal">
+		<option value="0173" label="Serbia">
+		<option value="0174" label="Seychelles">
+		<option value="0175" label="Sierra Leone">
+		<option value="0176" label="Singapore">
+		<option value="0177" label="Slovakia">
+		<option value="0178" label="Slovenia">
+		<option value="0179" label="Solomon Islands">
+		<option value="0180" label="Somalia">
+		<option value="0181" label="South Africa">
+		<option value="0182" label="South Korea">
+		<option value="0183" label="South Sudan">
+		<option value="0184" label="Spain">
+		<option value="0185" label="Sri Lanka">
+		<option value="0186" label="St Kitts & Nevis">
+		<option value="0187" label="St Lucia">
+		<option value="0188" label="St Vincent">
+		<option value="0189" label="Sudan">
+		<option value="0190" label="Suriname">
+		<option value="0191" label="Swaziland">
+		<option value="0192" label="Sweden">
+		<option value="0193" label="Switzerland">
+		<option value="0194" label="Syria">
+		<option value="0195" label="Taiwan">
+		<option value="0196" label="Tajikistan">
+		<option value="0197" label="Tanzania">
+		<option value="0198" label="Thailand">
+		<option value="0199" label="Timor L'Este">
+		<option value="0200" label="Togo">
+		<option value="0201" label="Tonga">
+		<option value="0202" label="Trinidad & Tobago">
+		<option value="0203" label="Tunisia">
+		<option value="0204" label="Turkey">
+		<option value="0205" label="Turkmenistan">
+		<option value="0206" label="Turks & Caicos">
+		<option value="0207" label="Tuvalu">
+		<option value="0208" label="Uganda">
+		<option value="0209" label="Ukraine">
+		<option value="0210" label="United Arab Emirates">
+		<option value="0211" label="United Kingdom">
+		<option value="0212" label="United States of America">
+		<option value="0213" label="Uruguay">
+		<option value="0214" label="Uzbekistan">
+		<option value="0215" label="Vanuatu">
+		<option value="0216" label="Vatican City">
+		<option value="0217" label="Venezuela">
+		<option value="0218" label="Vietnam">
+		<option value="0219" label="Virgin Islands (US)">
+		<option value="0220" label="Yemen">
+		<option value="0221" label="Zambia">
+		<option value="0222" label="Zimbabwe">
+	</datalist>
+
+	<datalist id="datalist2">
+		<option label="Afghanistan">
+		<option label="Albania">
+		<option label="Algeria">
+		<option label="Andorra">
+		<option label="Angola">
+		<option label="Anguilla">
+		<option label="Antigua & Barbuda">
+		<option label="Argentina">
+		<option label="Armenia">
+		<option label="Aruba">
+		<option label="Australia">
+		<option label="Austria">
+		<option label="Azerbaijan">
+		<option label="Bahamas">
+		<option label="Bahrain">
+		<option label="Bangladesh">
+		<option label="Barbados">
+		<option label="Belarus">
+		<option label="Belgium">
+		<option label="Belize">
+		<option label="Benin">
+		<option label="Bermuda">
+		<option label="Bhutan">
+		<option label="Bolivia">
+		<option label="Bosnia & Herzegovina">
+		<option label="Botswana">
+		<option label="Brazil">
+		<option label="British Virgin Islands">
+		<option label="Brunei">
+		<option label="Bulgaria">
+		<option label="Burkina Faso">
+		<option label="Burundi">
+		<option label="Cambodia">
+		<option label="Cameroon">
+		<option label="Canada">
+		<option label="Cape Verde">
+		<option label="Cayman Islands">
+		<option label="Central Arfrican Republic">
+		<option label="Chad">
+		<option label="Chile">
+		<option label="China">
+		<option label="Colombia">
+		<option label="Congo">
+		<option label="Cook Islands">
+		<option label="Costa Rica">
+		<option label="Cote D Ivoire">
+		<option label="Croatia">
+		<option label="Cuba">
+		<option label="Curacao">
+		<option label="Cyprus">
+		<option label="Czech Republic">
+		<option label="Denmark">
+		<option label="Djibouti">
+		<option label="Dominica">
+		<option label="Dominican Republic">
+		<option label="Ecuador">
+		<option label="Egypt">
+		<option label="El Salvador">
+		<option label="Equatorial Guinea">
+		<option label="Eritrea">
+		<option label="Estonia">
+		<option label="Ethiopia">
+		<option label="Falkland Islands">
+		<option label="Faroe Islands">
+		<option label="Fiji">
+		<option label="Finland">
+		<option label="France">
+		<option label="French Polynesia">
+		<option label="French West Indies">
+		<option label="Gabon">
+		<option label="Gambia">
+		<option label="Georgia">
+		<option label="Germany">
+		<option label="Ghana">
+		<option label="Gibraltar">
+		<option label="Greece">
+		<option label="Greenland">
+		<option label="Grenada">
+		<option label="Guam">
+		<option label="Guatemala">
+		<option label="Guernsey">
+		<option label="Guinea">
+		<option label="Guinea Bissau">
+		<option label="Guyana">
+		<option label="Haiti">
+		<option label="Honduras">
+		<option label="Hong Kong">
+		<option label="Hungary">
+		<option label="Iceland">
+		<option label="India">
+		<option label="Indonesia">
+		<option label="Iran">
+		<option label="Iraq">
+		<option label="Ireland">
+		<option label="Isle of Man">
+		<option label="Israel">
+		<option label="Italy">
+		<option label="Jamaica">
+		<option label="Japan">
+		<option label="Jersey">
+		<option label="Jordan">
+		<option label="Kazakhstan">
+		<option label="Kenya">
+		<option label="Kiribati">
+		<option label="Kosovo">
+		<option label="Kuwait">
+		<option label="Kyrgyzstan">
+		<option label="Laos">
+		<option label="Latvia">
+		<option label="Lebanon">
+		<option label="Lesotho">
+		<option label="Liberia">
+		<option label="Libya">
+		<option label="Liechtenstein">
+		<option label="Lithuania">
+		<option label="Luxembourg">
+		<option label="Macau">
+		<option label="Macedonia">
+		<option label="Madagascar">
+		<option label="Malawi">
+		<option label="Malaysia">
+		<option label="Maldives">
+		<option label="Mali">
+		<option label="Malta">
+		<option label="Marshall Islands">
+		<option label="Mauritania">
+		<option label="Mauritius">
+		<option label="Mexico">
+		<option label="Micronesia">
+		<option label="Moldova">
+		<option label="Monaco">
+		<option label="Mongolia">
+		<option label="Montenegro">
+		<option label="Montserrat">
+		<option label="Morocco">
+		<option label="Mozambique">
+		<option label="Myanmar">
+		<option label="Namibia">
+		<option label="Nauro">
+		<option label="Nepal">
+		<option label="Netherlands">
+		<option label="Netherlands Antilles">
+		<option label="New Caledonia">
+		<option label="New Zealand">
+		<option label="Nicaragua">
+		<option label="Niger">
+		<option label="Nigeria">
+		<option label="North Korea">
+		<option label="Norway">
+		<option label="Oman">
+		<option label="Pakistan">
+		<option label="Palau">
+		<option label="Palestine">
+		<option label="Panama">
+		<option label="Papua New Guinea">
+		<option label="Paraguay">
+		<option label="Peru">
+		<option label="Philippines">
+		<option label="Poland">
+		<option label="Portugal">
+		<option label="Puerto Rico">
+		<option label="Qatar">
+		<option label="Reunion">
+		<option label="Romania">
+		<option label="Russia">
+		<option label="Rwanda">
+		<option label="Saint Pierre & Miquelon">
+		<option label="Samoa">
+		<option label="San Marino">
+		<option label="Sao Tome and Principe">
+		<option label="Saudi Arabia">
+		<option label="Senegal">
+		<option label="Serbia">
+		<option label="Seychelles">
+		<option label="Sierra Leone">
+		<option label="Singapore">
+		<option label="Slovakia">
+		<option label="Slovenia">
+		<option label="Solomon Islands">
+		<option label="Somalia">
+		<option label="South Africa">
+		<option label="South Korea">
+		<option label="South Sudan">
+		<option label="Spain">
+		<option label="Sri Lanka">
+		<option label="St Kitts & Nevis">
+		<option label="St Lucia">
+		<option label="St Vincent">
+		<option label="Sudan">
+		<option label="Suriname">
+		<option label="Swaziland">
+		<option label="Sweden">
+		<option label="Switzerland">
+		<option label="Syria">
+		<option label="Taiwan">
+		<option label="Tajikistan">
+		<option label="Tanzania">
+		<option label="Thailand">
+		<option label="Timor L'Este">
+		<option label="Togo">
+		<option label="Tonga">
+		<option label="Trinidad & Tobago">
+		<option label="Tunisia">
+		<option label="Turkey">
+		<option label="Turkmenistan">
+		<option label="Turks & Caicos">
+		<option label="Tuvalu">
+		<option label="Uganda">
+		<option label="Ukraine">
+		<option label="United Arab Emirates">
+		<option label="United Kingdom">
+		<option label="United States of America">
+		<option label="Uruguay">
+		<option label="Uzbekistan">
+		<option label="Vanuatu">
+		<option label="Vatican City">
+		<option label="Venezuela">
+		<option label="Vietnam">
+		<option label="Virgin Islands (US)">
+		<option label="Yemen">
+		<option label="Zambia">
+		<option label="Zimbabwe">
+	</datalist>
+
+	<datalist id="datalist3">
+		<option value="0001">
+		<option value="0002">
+		<option value="0003">
+		<option value="0004">
+		<option value="0005">
+		<option value="0006">
+		<option value="0007">
+		<option value="0008">
+		<option value="0009">
+		<option value="0010">
+		<option value="0011">
+		<option value="0012">
+		<option value="0013">
+		<option value="0014">
+		<option value="0015">
+		<option value="0016">
+		<option value="0017">
+		<option value="0018">
+		<option value="0019">
+		<option value="0020">
+		<option value="0021">
+		<option value="0022">
+		<option value="0023">
+		<option value="0024">
+		<option value="0025">
+		<option value="0026">
+		<option value="0027">
+		<option value="0028">
+		<option value="0029">
+		<option value="0030">
+		<option value="0031">
+		<option value="0032">
+		<option value="0033">
+		<option value="0034">
+		<option value="0035">
+		<option value="0036">
+		<option value="0037">
+		<option value="0038">
+		<option value="0039">
+		<option value="0040">
+		<option value="0041">
+		<option value="0042">
+		<option value="0043">
+		<option value="0044">
+		<option value="0045">
+		<option value="0046">
+		<option value="0047">
+		<option value="0048">
+		<option value="0049">
+		<option value="0050">
+		<option value="0051">
+		<option value="0052">
+		<option value="0053">
+		<option value="0054">
+		<option value="0055">
+		<option value="0056">
+		<option value="0057">
+		<option value="0058">
+		<option value="0059">
+		<option value="0060">
+		<option value="0061">
+		<option value="0062">
+		<option value="0063">
+		<option value="0064">
+		<option value="0065">
+		<option value="0066">
+		<option value="0067">
+		<option value="0068">
+		<option value="0069">
+		<option value="0070">
+		<option value="0071">
+		<option value="0072">
+		<option value="0073">
+		<option value="0074">
+		<option value="0075">
+		<option value="0076">
+		<option value="0077">
+		<option value="0078">
+		<option value="0079">
+		<option value="0080">
+		<option value="0081">
+		<option value="0082">
+		<option value="0083">
+		<option value="0084">
+		<option value="0085">
+		<option value="0086">
+		<option value="0087">
+		<option value="0088">
+		<option value="0089">
+		<option value="0090">
+		<option value="0091">
+		<option value="0092">
+		<option value="0093">
+		<option value="0094">
+		<option value="0095">
+		<option value="0096">
+		<option value="0097">
+		<option value="0098">
+		<option value="0099">
+		<option value="0100">
+		<option value="0101">
+		<option value="0102">
+		<option value="0103">
+		<option value="0104">
+		<option value="0105">
+		<option value="0106">
+		<option value="0107">
+		<option value="0108">
+		<option value="0109">
+		<option value="0110">
+		<option value="0111">
+		<option value="0112">
+		<option value="0113">
+		<option value="0114">
+		<option value="0115">
+		<option value="0116">
+		<option value="0117">
+		<option value="0118">
+		<option value="0119">
+		<option value="0120">
+		<option value="0121">
+		<option value="0122">
+		<option value="0123">
+		<option value="0124">
+		<option value="0125">
+		<option value="0126">
+		<option value="0127">
+		<option value="0128">
+		<option value="0129">
+		<option value="0130">
+		<option value="0131">
+		<option value="0132">
+		<option value="0133">
+		<option value="0134">
+		<option value="0135">
+		<option value="0136">
+		<option value="0137">
+		<option value="0138">
+		<option value="0139">
+		<option value="0140">
+		<option value="0141">
+		<option value="0142">
+		<option value="0143">
+		<option value="0144">
+		<option value="0145">
+		<option value="0146">
+		<option value="0147">
+		<option value="0148">
+		<option value="0149">
+		<option value="0150">
+		<option value="0151">
+		<option value="0152">
+		<option value="0153">
+		<option value="0154">
+		<option value="0155">
+		<option value="0156">
+		<option value="0157">
+		<option value="0158">
+		<option value="0159">
+		<option value="0160">
+		<option value="0161">
+		<option value="0162">
+		<option value="0163">
+		<option value="0164">
+		<option value="0165">
+		<option value="0166">
+		<option value="0167">
+		<option value="0168">
+		<option value="0169">
+		<option value="0170">
+		<option value="0171">
+		<option value="0172">
+		<option value="0173">
+		<option value="0174">
+		<option value="0175">
+		<option value="0176">
+		<option value="0177">
+		<option value="0178">
+		<option value="0179">
+		<option value="0180">
+		<option value="0181">
+		<option value="0182">
+		<option value="0183">
+		<option value="0184">
+		<option value="0185">
+		<option value="0186">
+		<option value="0187">
+		<option value="0188">
+		<option value="0189">
+		<option value="0190">
+		<option value="0191">
+		<option value="0192">
+		<option value="0193">
+		<option value="0194">
+		<option value="0195">
+		<option value="0196">
+		<option value="0197">
+		<option value="0198">
+		<option value="0199">
+		<option value="0200">
+		<option value="0201">
+		<option value="0202">
+		<option value="0203">
+		<option value="0204">
+		<option value="0205">
+		<option value="0206">
+		<option value="0207">
+		<option value="0208">
+		<option value="0209">
+		<option value="0210">
+		<option value="0211">
+		<option value="0212">
+		<option value="0213">
+		<option value="0214">
+		<option value="0215">
+		<option value="0216">
+		<option value="0217">
+		<option value="0218">
+		<option value="0219">
+		<option value="0220">
+		<option value="0221">
+		<option value="0222">
+	</datalist>
+
+</form>
+
+<script src="./jquery-3.6.0.js"></script>
+<script src="./autocomplete.js"></script>
+<script>
+$('input').autocomplete();
+</script>
+
+</body>
+</html>

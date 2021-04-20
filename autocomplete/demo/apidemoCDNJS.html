@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="./autocomplete.css">
+<style>
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: Arial;
+	color: #333;
+}
+
+label {
+	display: inline-block;
+	vertical-align: top;
+}
+
+label > span {
+	display: block;
+	padding: .25rem 10px;
+	color: gray;
+}
+
+input[type=text] {
+	border: 1px solid transparent;
+	background-color: #f1f1f1;
+	padding: 10px;
+	font-size: 16px;
+	width: 100%;
+}
+
+label > span,
+.autocomplete-container,
+.autocomplete-list {
+	width: 20em;
+}
+
+.autocomplete-list {
+	max-height: 30em;
+}
+
+.autocomplete-listitem {
+	white-space: normal;
+}
+
+.autocomplete-listitem-value {
+	white-space: nowrap;
+	border-bottom: 2px dotted silver;
+	padding-bottom: .25em;
+	font-weight: bold;
+}
+
+.autocomplete-listitem-label {
+	font-size: .8rem;
+	border-left: 4px solid yellowgreen;
+	padding: .5em;
+	box-sizing: border-box;
+	margin-top: .5em;
+	margin-bottom: .5em;
+}
+
+.autocomplete-listitem-active:hover,
+.autocomplete-listitem-active {
+	background-color: aliceblue;
+	color: black;
+}
+
+.autocomplete-listitem-active .autocomplete-listitem-highlight {
+	color: red;
+}
+
+span#info > a {
+	display: block;
+}
+</style>
+</head>     
+<body>
+
+<h2>API Demo CDNJS</h2>
+
+<form autocomplete="off">
+	<label>
+		<input type="text" placeholder="Suche" data-autocomplete-label="info">
+		<span id="info"></span>
+	</label>
+</form>
+
+<script src="./jquery-3.6.0.js"></script>
+<script src="./autocomplete.js"></script>
+<script>
+
+var optionsCDNJS = {
+	data: {
+		searchId: 0,
+		cache: {}
+	},
+	search: function (searchTerm, resolve) {
+		var id = ++this.data.searchId;
+		var me = this;
+
+		window.setTimeout(function(){
+			if (me.data.searchId !== id) {
+				// outdated
+				return;
+			}
+
+			var searchTermUpper = searchTerm.toUpperCase();
+			var cackeKey = "cache:" + searchTermUpper;
+			var result = me.data.cache[cackeKey];
+
+			if (result) {
+				console.log("result from cache: " + searchTerm);
+				console.log(result.length + " libraries found for: " + searchTerm);
+				resolve(result);
+				return;
+			}
+
+			// CDNJS API
+			var params = {
+				limit: "100",
+				fields: "name,description,version,originalName",
+				search_fields: "name,description,keywords",
+				search: searchTerm
+			};
+
+			var url = "https://api.cdnjs.com/libraries?" + Object.keys(params).map(function(key){ return key + "=" + encodeURIComponent(params[key]); }).join("&");
+
+			$.getJSON(url).done(function(response) {
+				// transform into whatever
+				result = (response.results || []).map(function(item) {
+					// use value/label preffered (autocomplete can handle that)
+					// but you can also transform the result into your own data layout
+					var description = (item.description.length <= 80 ? item.description : item.description.substr(0, 77)  + "...") + " (" + item.version + ")";
+					var indexof = item.name.toUpperCase().indexOf(searchTermUpper);
+
+					return {
+						value: item.name,
+						label: description,
+						link: "https://cdnjs.com/libraries/" + item.originalName,
+						quali: (indexof == 0 ? 2 : (indexof > 0 ? 1 : 0))
+					};
+				});
+
+				console.log(result.length + " libraries found for: " + searchTerm);
+
+				// sort the result, if needed
+				result = result.sort(function(a, b) {
+					if (a.quali > b.quali) {
+						return -1;
+					};
+
+					if (b.quali > a.quali) {
+						return 1;
+					};
+
+					// same quali
+					return a.value.toUpperCase() < b.value.toUpperCase() ? -1 : (a.value.toUpperCase() > b.value.toUpperCase() ? 1 : 0);
+				});
+
+				// cleanup the cache
+				if (Object.keys(me.data.cache).length > 100) {
+					console.log("clear cache");
+					me.data.cache = {};
+				}
+
+				// remember for performance
+				me.data.cache[cackeKey] = result;
+				console.log("added to cache: " + searchTerm);
+
+				// should be the latest search
+				if (me.data.searchId !== id) {
+					console.log("outdated search: " + searchTerm);
+					return;
+				}
+
+				resolve(result);
+			});
+		}, 20);
+	},
+	apply: function(input, item) {
+		input.value = ((item && item.value) || defaultItemString(item));
+		input.title = ((item && item.label) || defaultItemString(item));
+
+		var label = document.getElementById(input.getAttribute('data-autocomplete-label'));
+
+		if (label) {
+			label.innerText = input.title;
+
+			var hyperlink = document.createElement("a");
+			hyperlink.setAttribute("href", item.link);
+			hyperlink.setAttribute("target", "_blank");
+			hyperlink.innerHTML = item.value;
+
+			label.appendChild(hyperlink);
+		}
+	}
+};
+
+$('input').autocomplete(optionsCDNJS);
+</script>
+
+</body>
+</html>
