@@ -732,7 +732,11 @@ v1.21.4.20
 				labelElement.innerText = ((item && item.label) || defaultItemString(item)).replace("<", "&lt;").replace(">", "&gt;");
 
 				if (searchTerm) {
-					var regexp = new RegExp("(" + searchTerm + ")", "gi");
+					// special mapping
+                    			var special = { "]": "\\]", "\\": "\\\\" };
+                    			var pattern = "([" + searchTerm.split("").map(function (c) { return (special[c] || c); }).join("][") + "])";
+                    			var regexp  = new RegExp(pattern, "gi");
+
 					valueElement.innerHTML = valueElement.innerText.replace(regexp, "<span class='autocomplete-listitem-highlight'>$1</span>");
 					labelElement.innerHTML = labelElement.innerText.replace(regexp, "<span class='autocomplete-listitem-highlight'>$1</span>");
 				}
