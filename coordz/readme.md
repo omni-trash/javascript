@@ -176,6 +176,7 @@ var text = Coordz.data(-5230584).lat().render();
 // 52°30'58.4"S
 console.log(text);
 
+
 // 2. long way
 // set hemisphere manually
 var lat = Coordz.data(-5230584);
@@ -186,6 +187,16 @@ lat.T   = Coordz.DataType.Latitude;
 var text = Coordz.render('dd°mm\'ss.s"H', lat);
 
 // 52°30'58.4"S
+console.log(text);
+
+
+// 3. custom format
+var lat = Coordz.data(-5230584).lat();
+
+// to string
+var text = lat.render('H d m.mmmm');
+
+// "S 52 30.9733"
 console.log(text);
 ```
 
