@@ -20,7 +20,7 @@ Ein Grad unterteilt sich in 60 Minuten, und eine Minute in 60 Sekunden. Das sind
 
 ***Kleines Einmaleins:***
 
-|Deutsh|Englisch|Abk.|
+|Deutsch|Englisch|Abk.|
 |-|-|-|
 |Breite|Latitude|lat|
 |Länge|Longitude|lon|
@@ -314,7 +314,7 @@ console.log(Coordz.data(N).lat().render())
 get_data_from_backend('Berlin').then(coord => {
   // convert to lat = 5230584, lon = 1322418
   const latN: number = Coordz.combine(coord.lat);
-  const lonN: number = Coordz.combine(coord.lat);
+  const lonN: number = Coordz.combine(coord.lon);
 
   const lat: IData = Coordz.data(latN).lat();
   const lon: IData = Coordz.data(lonN).lon();
