@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Coordz</title>
+	<script src="./../dist/legacy/coordz.js"></script>
+</head>
+<body>
+<h1>Coordz Testpage</h1>
+<div>
+    <legend>
+        <span style="width: 6em; display: inline-block;">Eingabe</span>
+        <input id="ConvertInput" style="width: 20em" value='52°07&apos;27.1&quot;N 11°38&apos;06.6&quot;E'>
+        <button id="ConvertButton">Convert</button>
+    </legend>
+</div>
+
+<div style="margin: 1em; white-space: pre-wrap; font-family: 'courier new'" id="ConvertOutput">
+</div>
+
+<script>
+var input   = document.getElementById("ConvertInput");
+var button  = document.getElementById("ConvertButton");
+var output  = document.getElementById("ConvertOutput");
+var formats = [
+	"d.ddddd°",
+	"m.mmmmm\'",
+	"s.sssss\"",
+	"dd°mm\'ss.s\"",
+	"D.ddddd°",
+	"M.mmmmm\'",
+	"S.sssss\"",
+	"DD°mm\'ss.s\"",
+	"dd°mm\'ss.s\"H",
+	"dd°m.mmm\'",
+	"DD°m.mmm\'",
+	"n",
+	"N"
+];
+
+button.onclick = function() {
+    var value  = input.value;
+    var result = Coordz.parse(value);
+    var lat    = result[0] || Coordz.data(0);
+    var lon    = result[1] || Coordz.data(0);
+
+    lat.H = lat.H || (lat.N < 0 ? 'S' : 'N');
+    lon.H = lon.H || (lon.N < 0 ? 'W' : 'E');
+
+    output.innerText = formats.map(function(format) { 
+        return format.padEnd(14, " ") + " : " + Coordz.render(format, lat) + ", " + Coordz.render(format, lon); }
+    ).join("\r\n");
+};
+
+</script>
+</body>
+</html>

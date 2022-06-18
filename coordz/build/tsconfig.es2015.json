@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "outDir": "../dist/es2015",
+        "moduleResolution": "Node",
+        "module": "ES2015",
+        "sourceMap": true,
+        "removeComments": true,
+        "allowJs": false,
+        "lib": ["DOM", "ES2015", "ES2017.String"]
+    },
+    "compileOnSave": true,
+    "files": ["../source/coordz.ts"]
+}

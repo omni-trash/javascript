@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "outFile": "../dist/legacy/coordz.js",
+        "moduleResolution": "Node",
+        "module": "None",
+        "sourceMap": true,
+        "removeComments": true,
+        "allowJs": false,
+        "lib": ["DOM", "ES2015", "ES2017.String"]
+    },
+    "compileOnSave": true,
+    "files": ["../source/coordz.legacy.ts"]
+}

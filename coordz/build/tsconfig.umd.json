@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "outDir": "../dist/umd",
+        "moduleResolution": "Node",
+        "module": "UMD",
+        "sourceMap": true,
+        "removeComments": true,
+        "allowJs": false,
+        "lib": ["DOM", "ES2015", "ES2017.String"]
+    },
+    "compileOnSave": true,
+    "files": ["../source/coordz.ts"]
+}

@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "outFile": "./debug/coordz.js",
+        "moduleResolution": "Node",
+        "module": "AMD",
+        "sourceMap": true,
+        "removeComments": true,
+        "allowJs": false,
+        "lib": ["DOM", "ES2015", "ES2017.String"]
+    },
+    "compileOnSave": true,
+    "include": ["./source/coordz.ts"]
+}
