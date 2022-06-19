@@ -7,8 +7,9 @@
         "sourceMap": true,
         "removeComments": true,
         "allowJs": false,
+        "types": [],
         "lib": ["DOM", "ES2015", "ES2017.String"]
     },
     "compileOnSave": true,
-    "include": ["./source/coordz.ts"]
+    "files": ["./source/coordz.ts"]
 }

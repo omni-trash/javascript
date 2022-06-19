@@ -1,0 +1,14 @@
+{
+  "name": "coordz",
+  "version": "1.22.6.12",
+  "homepage": "https://github.com/omni-trash/javascript/tree/main/coordz",
+  "license": "ISC",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.2",
+    "jest": "^28.1.1",
+    "ts-jest": "^28.0.5"
+  }
+}

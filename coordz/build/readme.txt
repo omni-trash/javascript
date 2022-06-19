@@ -8,7 +8,8 @@ tsc -p .\build\tsconfig.system.json
 tsc -p .\build\tsconfig.umd.json
 
 = debug =
+# use tsconfig.json in root dir
 tsc --watch
 tsc -w
 
-use test.debug.html for development
+# use test.debug.html for development
