@@ -2,7 +2,7 @@
 
 /*!
  * Geographische Koordinaten
- * v1.22.6.12
+ * v1.22.6.26
  **/
 
 export module Coordz {
@@ -14,43 +14,43 @@ export module Coordz {
     }
 
     export interface IData {
-        // unsigned degrees part
+        /** unsigned degrees part */
         d: number,
 
-        // unsigned minutes part
+        /** unsigned minutes part */
         m: number,
 
-        // unisgned seconds part
+        /** unisgned seconds part */
         s: number,
 
-        // unsigned integer full
+        /** unsigned integer full */
         n: number,
 
-        // signed degrees full
+        /** signed degrees full */
         D: number,
 
-        // signed minutes full
+        /** signed minutes full */
         M: number,
 
-        // signed seconds full
+        /** signed seconds full */
         S: number,
 
-        // singed integer full
+        /** singed integer full */
         N: number,
 
-        // cardinal point "N|E|S|W"
+        /** cardinal point "N|E|S|W" */
         H: string,
 
-        // "Latitude|Longitude|Unspecified"
+        /** Latitude|Longitude|Unspecified */
         T: DataType,
 
-        // convert to latitude
+        /** convert to latitude */
         lat: () => IData,
 
-        // convert to longitude
+        /** convert to longitude */
         lon: () => IData,
 
-        // render value
+        /** render value */
         render: (format: string)=> string
     }
 
@@ -104,7 +104,9 @@ export module Coordz {
         "''"        // 2x'
     ];
 
-    // some common format strings for render
+    /**
+     * some common format strings for render
+     */
     export const Format = {
         Default : "dd°mm'ss.s\"H",
         Degrees : "D.ddddd°",
@@ -112,9 +114,18 @@ export module Coordz {
         Seconds : "S.sssss\""
     } as const;
 
+    const zeroes: number[] = [-0, +0, Number.NaN, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY];
+
     var math = {
         // abs(-12.345) -> 12.345
         abs: function(number: number): number {
+            // for now lets say these values are 0 to prevent unexpected formatting (string)
+            for (var val of zeroes) {
+                if (number === val) {
+                    return 0;
+                }
+            }
+
             return (number < 0 ? -number : number);
         },
         // fract(-12.345) -> -0.3450000
@@ -157,37 +168,72 @@ export module Coordz {
         }
     };
 
-    // D, M, S -> N = [-]ddddmmsss = int32
+    /**
+     * D, M, S -> N = [-]ddddmmsss = int32
+     * @param D Degrees
+     * @param M Minutes
+     * @param S Seconds
+     * @returns N
+     */
     export function combine(D: number, M: number, S: number): number {
         D = D || 0;
         M = M || 0;
         S = S || 0;
 
-        var d: number = math.abs(D) + ((M + (S / 60)) / 60);
+        // total seconds
+        var degrees = D;
+        var minutes = (M + math.abs(degrees * 60)) * (degrees < 0 ? -1 : 1);
+        var seconds = (S + math.abs(minutes * 60)) * (minutes < 0 ? -1 : 1);
+        var total   = math.int(math.round(seconds * 10));
 
-        // down (60)
-        while (d >= 180) {
-            d = d / 60;
+        var s = total % 600;
+        total = (total - s) / 600;
+
+        var m = total % 60;
+        total = (total - m) / 60;
+
+        var d = total % 180;
+        var N = (d * 100 + m) * 1000 + s;
+
+        return N;
+
+/*
+        // total degrees
+        var total: number = D;
+
+        // add minutes to total degrees
+        total = (total < 0 ? -1 : 1) * (math.abs(total) + (M / 60));
+
+        // add seconds to total degrees
+        total = (total < 0 ? -1 : 1) * (math.abs(total) + (S / 3600));
+
+        // down (60) for compatibility
+        while (math.abs(total) >= 180) {
+            total = total / 60;
         }
 
+        var N: number = total;
+
         // up (100)
-        d = math.int(d) * 100 + math.fract(d) * 60;
-        d = math.int(d) * 100 + math.fract(d) * 60;
+        N = math.int(N) * 100 + math.round(math.fract(N) * 60, 5);
+        N = math.int(N) * 100 + math.round(math.fract(N) * 60, 5);
         // ddmmss.s -> ddmmsss
-        d = d * 10;
+        N = N * 10;
 
         // Math.round(-20.5) -> 20!
         // math.round(-20.5) -> 21!
         // round away from zero
-        d = math.round(d);
-
-        var n = math.int(d);
-        var N = (D < 0 ? -n : n);
+        N = math.round(N);
 
         return N;
+*/
     }
 
-    // N = [-]ddddmmsss = int32 -> {D, M, S ...}
+    /**
+     * N = [-]ddddmmsss = int32 -> {D, M, S ...}
+     * @param N 
+     * @returns IData
+     */
     export function data(N: number): IData {
         N = math.int(N);
 
@@ -224,7 +270,11 @@ export module Coordz {
         return coord;
     }
 
-    // parse string to [{D, M, S ...}, ...]
+    /**
+     * parse string to [{D, M, S ...}, ...]
+     * @param value 
+     * @returns IData[]
+     */
     export function parse(value: string): IData[] {
         // tokenize (and normalize some parts)
         var tokens: IToken[] = tokenize(value || "");
@@ -236,7 +286,11 @@ export module Coordz {
         return process(organized);
     }
 
-    // split string into parts
+    /**
+     * split string into parts
+     * @param value 
+     * @returns IToken[]
+     */
     function tokenize(value: string): IToken[] {
         // TRASH   : unspecific
         // NUMBER  : '-d.d°'
@@ -289,7 +343,11 @@ export module Coordz {
         return tokens;
     }
 
-    // analyze and organize for processing
+    /**
+     * analyze and organize for processing
+     * @param tokens 
+     * @returns IToken[]
+     */
     function organize(tokens: IToken[]): IToken[] {
         var organized: IToken[] = [];
         var numbers:   number   = 0;
@@ -368,7 +426,11 @@ export module Coordz {
         return organized;    
     }
 
-    // make data array
+    /**
+     * make data array
+     * @param organized 
+     * @returns IData[]
+     */
     function process(organized: IToken[]): IData[] {
         var result: IData[] = [];
 
@@ -401,7 +463,11 @@ export module Coordz {
         return result;
     }
 
-    // flush bag
+    /**
+     * flush bag
+     * @param bag 
+     * @param result
+     */
     function flush(bag: IBag, result: IData[]) {
         // while has numbers
         while (bag.D.length || bag.M.length || bag.S.length || bag.X.length) {
@@ -441,22 +507,35 @@ export module Coordz {
         bag.H = [];
     }
 
-    // convert to latitude
+    /**
+     * convert to latitude
+     * @param data 
+     * @returns data
+     */
     function lat(data: IData) {
         data.H = (data.N < 0 ? 'S' : 'N');
         data.T = DataType.Latitude;
         return data;
     }
 
-    // convert to longitude
+    /**
+     * convert to longitude
+     * @param data 
+     * @returns data
+     */
     function lon(data: IData) {
         data.H = (data.N < 0 ? 'W' : 'E');
         data.T = DataType.Longitude;
         return data;
     }
 
-    // render single value
-    // render("DD°mm'ss.s\"", data(1122334)) -> 11°22'33.4"
+    /**
+     * render single value
+     * render("DD°mm'ss.s\"", data(1122334)) -> 11°22'33.4"
+     * @param format 
+     * @param data 
+     * @returns string
+     */
     export function render(format: string = Format.Default, data: IData): string {
         var text: string = format;
 
@@ -499,7 +578,9 @@ export module Coordz {
                     break;
             }
 
-            return math.trunc(val, deci).toFixed(deci).padStart(len, "0");
+            // needed for some rarely special cases, for example D = -0.001 ("D" -> "-0")
+            var sign: string = (val < 0 ? "-" : "");
+            return sign + math.abs(math.trunc(val, deci)).toFixed(deci).padStart(len, "0");
         });
 
         text = text.replace(/H+/ig, data.H || '?');

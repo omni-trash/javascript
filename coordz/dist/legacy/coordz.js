@@ -1,6 +1,6 @@
 /*!
  * Geographische Koordinaten
- * v1.22.6.12
+ * v1.22.6.26
  **/
 var Coordz;
 (function (Coordz) {
@@ -40,8 +40,15 @@ var Coordz;
         Minutes: "M.mmmmm'",
         Seconds: "S.sssss\""
     };
+    var zeroes = [-0, +0, Number.NaN, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY];
     var math = {
         abs: function (number) {
+            for (var _i = 0, zeroes_1 = zeroes; _i < zeroes_1.length; _i++) {
+                var val = zeroes_1[_i];
+                if (number === val) {
+                    return 0;
+                }
+            }
             return (number < 0 ? -number : number);
         },
         fract: function (number) {
@@ -76,16 +83,16 @@ var Coordz;
         D = D || 0;
         M = M || 0;
         S = S || 0;
-        var d = math.abs(D) + ((M + (S / 60)) / 60);
-        while (d >= 180) {
-            d = d / 60;
-        }
-        d = math.int(d) * 100 + math.fract(d) * 60;
-        d = math.int(d) * 100 + math.fract(d) * 60;
-        d = d * 10;
-        d = math.round(d);
-        var n = math.int(d);
-        var N = (D < 0 ? -n : n);
+        var degrees = D;
+        var minutes = (M + math.abs(degrees * 60)) * (degrees < 0 ? -1 : 1);
+        var seconds = (S + math.abs(minutes * 60)) * (minutes < 0 ? -1 : 1);
+        var total = math.int(math.round(seconds * 10));
+        var s = total % 600;
+        total = (total - s) / 600;
+        var m = total % 60;
+        total = (total - m) / 60;
+        var d = total % 180;
+        var N = (d * 100 + m) * 1000 + s;
         return N;
     }
     Coordz.combine = combine;
@@ -322,7 +329,8 @@ var Coordz;
                     val = data.N;
                     break;
             }
-            return math.trunc(val, deci).toFixed(deci).padStart(len, "0");
+            var sign = (val < 0 ? "-" : "");
+            return sign + math.abs(math.trunc(val, deci)).toFixed(deci).padStart(len, "0");
         });
         text = text.replace(/H+/ig, data.H || '?');
         return text;
