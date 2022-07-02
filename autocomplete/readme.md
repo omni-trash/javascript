@@ -91,4 +91,4 @@ Der Container wird automatisch erstellt!
 </datalist>
 ```
 
-TODO: ... more details ... maybe
+TODO: ... more details
