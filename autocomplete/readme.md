@@ -93,7 +93,7 @@ Der Container wird automatisch erstellt!
 
 TODO: ... more details
 
-## Version 1.22.8.20
+## Version 1.22.8.21
 
 - HTML in ``option``, ohne extra ``render()``-Funktion (z.B. für Vue-Template etc.)
 - ``label`` für ``data-autocomplete-label``, ansonsten nicht erforderlich
