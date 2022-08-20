@@ -99,7 +99,6 @@ TODO: ... more details
 - ``label`` für ``data-autocomplete-label``, ansonsten nicht erforderlich
 
 ```html
-
 <datalist id="countries">
     <option value="0001" label="Afghanistan">
         <div>
@@ -119,4 +118,3 @@ TODO: ... more details
     ...
 </datalist>
 ```
-
