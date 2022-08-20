@@ -103,7 +103,7 @@ TODO: ... more details
     <option value="0001" label="Afghanistan">
         <div>
             <div><b>0001</b></div>
-            <div><i>Afghanistan</i></div>
+            <div>Afghanistan</div>
             <div><small><i>Kabul</i></small></div>
         </div>
     </option>
