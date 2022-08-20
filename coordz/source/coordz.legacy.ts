@@ -8,6 +8,13 @@
 /* eslint no-fallthrough: 0 */
 /* eslint no-inner-declarations: 0 */
 /* eslint no-useless-escape: 0 */
+
+/* eslint @typescript-eslint/no-namespace: 0 */
+/* eslint @typescript-eslint/prefer-namespace-keyword: 0 */
+/* eslint @typescript-eslint/no-inferrable-types: 0 */
+/* eslint @typescript-eslint/no-explicit-any: 0 */
+
+/* eslint-disable */
 module Coordz {
 
     export enum DataType {
