@@ -139,7 +139,7 @@ var optionsCDNJS = {
 					return {
 						value: item.name,
 						label: description,
-						link: "https://cdnjs.com/libraries/" + item.originalName,
+						link: "https://cdnjs.com/libraries/" + (item.originalName || item.name),
 						quali: (indexof == 0 ? 2 : (indexof > 0 ? 1 : 0))
 					};
 				});
