@@ -1,6 +1,6 @@
 /*!
  * Geographische Koordinaten
- * v1.22.6.26
+ * v1.22.8.16
  **/
 define("coordz", ["require", "exports"], function (require, exports) {
     "use strict";

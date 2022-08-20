@@ -2,9 +2,12 @@
 
 /*!
  * Geographische Koordinaten
- * v1.22.6.26
+ * v1.22.8.16
  **/
 
+/* eslint no-fallthrough: 0 */
+/* eslint no-inner-declarations: 0 */
+/* eslint no-useless-escape: 0 */
 module Coordz {
 
     export enum DataType {
@@ -51,7 +54,7 @@ module Coordz {
         lon: () => IData,
 
         /** render value */
-        render: (format: string)=> string
+        render: (format?: string)=> string
     }
 
     enum TokenType{
@@ -116,11 +119,11 @@ module Coordz {
 
     const zeroes: number[] = [-0, +0, Number.NaN, Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY];
 
-    var math = {
+    const math = {
         // abs(-12.345) -> 12.345
         abs: function(number: number): number {
             // for now lets say these values are 0 to prevent unexpected formatting (string)
-            for (var val of zeroes) {
+            for (const val of zeroes) {
                 if (number === val) {
                     return 0;
                 }
@@ -134,9 +137,9 @@ module Coordz {
         },
         // trunc(-12.345, 2) -> -12.34
         trunc: function(number: number, deci: number): number {
-            var n: number = math.int(number);
-            var f: number = math.fract(number);
-            var p: number = Math.pow(10, deci);
+            let   n: number = math.int(number);
+            const f: number = math.fract(number);
+            const p: number = Math.pow(10, deci);
 
             if (p > 1) {
                 n = n + math.int(f * p) / p;
@@ -148,8 +151,8 @@ module Coordz {
         // round(-20.5) -> -21
         // round(52.033277777777776, 7) -> 52.0332778
         round: function (number: number, deci: number = 0): number {
-            var p: number = Math.pow(10, deci);
-            var x: number = (number < 0 ? -0.5 : 0.5);
+            const p: number = Math.pow(10, deci);
+            let   x: number = (number < 0 ? -0.5 : 0.5);
 
             if (p > 1) {
                 x = x / p;
@@ -181,19 +184,19 @@ module Coordz {
         S = S || 0;
 
         // total seconds
-        var degrees = D;
-        var minutes = (M + math.abs(degrees * 60)) * (degrees < 0 ? -1 : 1);
-        var seconds = (S + math.abs(minutes * 60)) * (minutes < 0 ? -1 : 1);
-        var total   = math.int(math.round(seconds * 10));
+        const degrees = D;
+        const minutes = (M + math.abs(degrees * 60)) * (degrees < 0 ? -1 : 1);
+        const seconds = (S + math.abs(minutes * 60)) * (minutes < 0 ? -1 : 1);
+        let   total   = math.int(math.round(seconds * 10));
 
-        var s = total % 600;
+        const s = total % 600;
         total = (total - s) / 600;
 
-        var m = total % 60;
+        const m = total % 60;
         total = (total - m) / 60;
 
-        var d = total % 180;
-        var N = (d * 100 + m) * 1000 + s;
+        const d = total % 180;
+        const N = (d * 100 + m) * 1000 + s;
 
         return N;
 
@@ -237,21 +240,21 @@ module Coordz {
     export function data(N: number): IData {
         N = math.int(N);
 
-        var n: number = math.abs(N);
-        var d: number = math.int(n / 100000);
-        var m: number = math.int(n % 100000 / 1000);
-        var s: number = math.int(n % 1000);
+        const n: number = math.abs(N);
+        let   d: number = math.int(n / 100000);
+        let   m: number = math.int(n % 100000 / 1000);
+        let   s: number = math.int(n % 1000);
 
         s = s / 10;
         m = m + s / 60;
         d = d + m / 60;
 
-        var D = (N < 0 ? -d : d);
-        var M = (D * 60);
-        var S = (M * 60);
+        const D = (N < 0 ? -d : d);
+        const M = (D * 60);
+        const S = (M * 60);
 
         // round floats not required but looks better
-        var coord: IData = {
+        const coord: IData = {
             d: math.round(d, 7),
             m: math.round(m, 7),
             s: math.round(s, 7),
@@ -264,7 +267,7 @@ module Coordz {
             T: DataType.Unspecified,
             lat: () => lat(coord),
             lon: () => lon(coord),
-            render: (format: string) => render(format, coord)
+            render: (format?: string) => render(format, coord)
         };
 
         return coord;
@@ -277,10 +280,10 @@ module Coordz {
      */
     export function parse(value: string): IData[] {
         // tokenize (and normalize some parts)
-        var tokens: IToken[] = tokenize(value || "");
+        const tokens: IToken[] = tokenize(value || "");
 
         // analyze and organize for processing
-        var organized: IToken[] = organize(tokens);
+        const organized: IToken[] = organize(tokens);
 
         // make data array
         return process(organized);
@@ -296,16 +299,16 @@ module Coordz {
         // NUMBER  : '-d.d°'
         // CARDINAL: 'ABC'
         // FLUSH   : ','
-        var regex = /([-+]?[0-9]+([\.,][0-9]+)?)([^-+0-9\.,;a-z]*)|([a-z]+)|([,;])/ig;
+        const regex = /([-+]?[0-9]+([\.,][0-9]+)?)([^-+0-9\.,;a-z]*)|([a-z]+)|([,;])/ig;
 
         // error correction for correct match: "0,0.555" -> "0, 0.555"
         value = value.replace(/[0-9],[0-9]+\.[0-9]/g, (a) => a.replace(",", ", "));
 
         // parts
-        var match: string[] = value.match(regex) || [value];
+        const match: string[] = value.match(regex) || [value];
 
-        var tokens: IToken[] = match.map(item => {
-            var token = {T: TokenType.Trash, V: item.trim()};
+        const tokens: IToken[] = match.map(item => {
+            const token = {T: TokenType.Trash, V: item.trim()};
 
             if (/[0-9]/.test(token.V)) {
                 // accept decimal comma
@@ -349,28 +352,28 @@ module Coordz {
      * @returns IToken[]
      */
     function organize(tokens: IToken[]): IToken[] {
-        var organized: IToken[] = [];
-        var numbers:   number   = 0;
-        var hist:      object   = {};
-        var last:      IToken | null;
+        const organized: IToken[] = [];
+        let   numbers:   number   = 0;
+        let   hist:      any      = {};
+        let   last:      IToken | null;
 
         // reset stats
-        var reset = () => {
+        const reset = () => {
             numbers  = 0;
             hist     = {};
             last     = null;
         };
 
         // append TokenType.Flush
-        var flush = (V?: string) => {
+        const flush = (V?: string) => {
             if (last && last.T != TokenType.Flush) {
-                var token: IToken = {T: TokenType.Flush, V: V || 'auto'};
+                const token: IToken = {T: TokenType.Flush, V: V || 'auto'};
                 organized.push(token);
                 last = token;
             }
         }
 
-        for (var token of tokens) {
+        for (const token of tokens) {
             switch (token.T) {
                 case TokenType.Cardinal:
                     // 1 2 3 N E ...
@@ -432,12 +435,12 @@ module Coordz {
      * @returns IData[]
      */
     function process(organized: IToken[]): IData[] {
-        var result: IData[] = [];
+        const result: IData[] = [];
 
         // hold DMS or X for unspecific numbers, H for cardinal points
-        var bag: IBag = {D: [], M: [], S: [], X: [], H: []};
+        const bag: IBag = {D: [], M: [], S: [], X: [], H: []};
 
-        for (var token of organized) {
+        for (const token of organized) {
             switch (token.T) {
                 case TokenType.Cardinal:
                     bag.H.push(token.V);
@@ -471,12 +474,12 @@ module Coordz {
     function flush(bag: IBag, result: IData[]) {
         // while has numbers
         while (bag.D.length || bag.M.length || bag.S.length || bag.X.length) {
-            var D = math.float(bag.D.length > 0 ? bag.D.shift() : bag.X.shift());
-            var M = math.float(bag.M.length > 0 ? bag.M.shift() : bag.X.shift());
-            var S = math.float(bag.S.length > 0 ? bag.S.shift() : bag.X.shift());
-            var H = bag.H.shift() || '';
-            var T = DataType.Unspecified;
-            var N = combine(D, M, S);
+            const D = math.float(bag.D.length > 0 ? bag.D.shift() : bag.X.shift());
+            const M = math.float(bag.M.length > 0 ? bag.M.shift() : bag.X.shift());
+            const S = math.float(bag.S.length > 0 ? bag.S.shift() : bag.X.shift());
+            let   H = bag.H.shift() || '';
+            let   T = DataType.Unspecified;
+            let   N = combine(D, M, S);
 
             switch (H) {
                 case 'S':
@@ -494,7 +497,7 @@ module Coordz {
             }
 
             // data(N) converts to DataType.Unspecified
-            var item = data(N);
+            const item = data(N);
 
             // apply type and cardinal
             item.H = H;
@@ -537,17 +540,17 @@ module Coordz {
      * @returns string
      */
     export function render(format: string = Format.Default, data: IData): string {
-        var text: string = format;
+        let text: string = format;
 
         text = text.replace(/((?<x>[dmsn])\k<x>*)(\.(\k<x>+))?/ig, function(a, b, c, d, e) {
             // ((x)xxxx)(.(xxxx))
             //   c         eeee
             //   bbbbbb  dddddd 
 
-            var digit = b.length;
-            var deci  = e && e.length || 0;
-            var len   = digit + (d && d.length || 0);
-            var val   = 0;
+            const digit = b.length;
+            const deci  = e && e.length || 0;
+            const len   = digit + (d && d.length || 0);
+            let   val   = 0;
 
             switch (c) {
                 case "d":
@@ -579,7 +582,7 @@ module Coordz {
             }
 
             // needed for some rarely special cases, for example D = -0.001 ("D" -> "-0")
-            var sign: string = (val < 0 ? "-" : "");
+            const sign: string = (val < 0 ? "-" : "");
             return sign + math.abs(math.trunc(val, deci)).toFixed(deci).padStart(len, "0");
         });
 
@@ -587,5 +590,4 @@ module Coordz {
 
         return text;
     }
-
 }

@@ -1,6 +1,6 @@
 /*!
  * Geographische Koordinaten
- * v1.22.6.26
+ * v1.22.8.16
  **/
 System.register("coordz", [], function (exports_1, context_1) {
     "use strict";
@@ -11,7 +11,7 @@ System.register("coordz", [], function (exports_1, context_1) {
         execute: function () {
             /*!
              * Geographische Koordinaten
-             * v1.22.6.26
+             * v1.22.8.16
              **/
             (function (Coordz) {
                 var DataType;

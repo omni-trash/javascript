@@ -1,7 +1,7 @@
 "use strict";
 /*!
  * Geographische Koordinaten
- * v1.22.6.26
+ * v1.22.8.16
  **/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Coordz = void 0;
