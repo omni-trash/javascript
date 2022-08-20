@@ -663,7 +663,7 @@ v1.22.8.20
                     return {
                         value: value,
                         label: label,
-                        nodes: [...node.childNodes].filter(child => child.nodeType == Node.ELEMENT_NODE)
+                        nodes: [].slice.call(node.childNodes).filter(function(child) { return child.nodeType == Node.ELEMENT_NODE })
                     };
                 });
             }
@@ -756,7 +756,7 @@ v1.22.8.20
                 if (item.nodes && item.nodes.length > 0) {
                     // empty, and then apply the child nodes from HTML of the option element
                     listItem.innerHTML = '';
-                    item.nodes.forEach(child => listItem.appendChild(child.cloneNode(true)));
+                    item.nodes.forEach(function(child) { listItem.appendChild(child.cloneNode(true)) });
                 }
             },
             apply: function (input, item) {
