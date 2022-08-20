@@ -1,4 +1,4 @@
 # javascript
 Zeugs
 
-Die Unterordner haben nichts mit einander zu tun.
+Die Unterordner haben nichts miteinander zu tun.
