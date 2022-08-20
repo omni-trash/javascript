@@ -92,3 +92,31 @@ Der Container wird automatisch erstellt!
 ```
 
 TODO: ... more details
+
+## Version 1.22.8.20
+
+- HTML in ``option``, ohne extra ``render()``-Funktion (z.B. für Vue-Template etc.)
+- ``label`` für ``data-autocomplete-label``, ansonsten nicht erforderlich
+
+```html
+
+<datalist id="countries">
+    <option value="0001" label="Afghanistan">
+        <div>
+            <div><b>0001</b></div>
+            <div><i>Afghanistan</i></div>
+            <div><small><i>Kabul</i></small></div>
+        </div>
+    </option>
+
+    <option value="0002" label="Albania">
+        <div>
+            <div><b>0002</b></div>
+            <div>Albania</div>
+            <div><small><i>Tirana</i></small></div>
+        </div>
+    </option>
+    ...
+</datalist>
+```
+

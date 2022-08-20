@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omni-trash/javascript/autocomplete/dist/1.21.4.20/autocomplete.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/omni-trash/javascript/autocomplete/dist/1.22.8.22/autocomplete.css">
 <style>
 * {
 	box-sizing: border-box;
@@ -62,6 +62,12 @@ input[type=text] {
 		<span id="label3"></span>
 	</label>
 	
+	<label>
+		with HTML
+		<input id="input4" type="text" placeholder="Eingabe" list="datalist4" data-autocomplete-label="label4">
+		<span id="label4"></span>
+	</label>
+
 <div>
 <xmp>
 with value + label
@@ -82,6 +88,15 @@ with value
 <option value="0001">
 ...
 <option value="0222">
+
+with HTML
+<option value="0001" label="Afghanistan">
+	<div>
+		<div><b>0001</b></div>
+		<div><i>Afghanistan</i></div>
+		<div><small><i>Kabul</i></small></div>
+	</div>
+</option>
 </xmp>
 </div>
 
@@ -760,10 +775,54 @@ with value
 		<option value="0222">
 	</datalist>
 
+	<datalist id="datalist4">
+		<option value="0001" label="Afghanistan">
+			<div>
+				<div><b>0001</b></div>
+				<div><i>Afghanistan</i></div>
+				<div><small><i>Kabul</i></small></div>
+			</div>
+		</option>
+		<option value="0002" label="Albania">
+			<div>
+				<div><b>0002</b></div>
+				<div>Albania</div>
+				<div><small><i>Tirana</i></small></div>
+			</div>
+		</option>
+		<option value="0003" label="Algeria">
+			<div>
+				<div><b>0003</b></div>
+				<div>Algeria</div>
+				<div><small><i>Algier</i></small></div>
+			</div>
+		</option>
+		<option value="0004" label="Andorra">
+			<div>
+				<div><b>0004</b></div>
+				<div>Andorra</div>
+				<div><small><i>Andorra la Vella</i></small></div>
+			</div>
+		</option>
+		<option value="0005" label="Angola">
+			<div>
+				<div><b>0005</b></div>
+				<div>Angola</div>
+				<div><small><i>Luanda</i></small></div>
+			</div>
+		</option>
+		<option value="0006" label="Anguilla">
+			<div>
+				<div><b>0006</b></div>
+				<div>Anguilla</div>
+				<div><small><i>The Valley</i></small></div>
+			</div>
+		</option>
+	</datalist>
 </form>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/omni-trash/javascript/autocomplete/dist/1.21.4.20/autocomplete.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/omni-trash/javascript/autocomplete/dist/1.22.8.20/autocomplete.js"></script>
 <script>
 $('input').autocomplete();
 </script>

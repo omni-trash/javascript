@@ -1,7 +1,10 @@
 ﻿.autocomplete-container {
     position: relative;
     border: 0;
-    width: 200px;
+    /*
+        bootstrap
+        width: 200px;
+    */
     display: block;
 }
 
