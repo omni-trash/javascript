@@ -97,6 +97,7 @@ TODO: ... more details
 
 - HTML in ``option``, ohne extra ``render()``-Funktion (z.B. für Vue-Template etc.)
 - ``label`` für ``data-autocomplete-label``, ansonsten nicht erforderlich
+- <del>Internet Explorer</del>
 
 ```html
 <datalist id="countries">
